@@ -149,17 +149,16 @@ export default function App() {
             </motion.div>
           ) : (
             <motion.div key="sky" className="w-full h-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <SkyView rejections={rejections} />
+              <SkyView rejections={rejections} count={userStat?.rejectionCount || 0} />
             </motion.div>
           )}
         </AnimatePresence>
       </main>
 
       {/* Floating Action Buttons */}
-      {!isShattered && (
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-6 z-50">
-          <button 
-            onClick={() => { setModalType('rejection'); setIsModalOpen(true); }}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-6 z-50">
+        <button 
+          onClick={() => { setModalType('rejection'); setIsModalOpen(true); }}
             className="group flex flex-col items-center gap-2"
           >
             <div className="w-14 h-14 bg-yellow-500 hover:bg-yellow-400 text-[#0A192F] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.4)] transition-all transform hover:scale-110">
@@ -178,7 +177,6 @@ export default function App() {
             <span className="text-xs text-gray-400 group-hover:text-emerald-400 transition-colors uppercase tracking-widest">Record Success</span>
           </button>
         </div>
-      )}
 
       {/* Modal */}
       <AnimatePresence>
