@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "Rejection": {
+      "title": "Rejection",
+      "description": "A record of a rejection experience.",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string", "description": "The description of the rejection." },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      },
+      "required": ["text", "createdAt", "userId"]
+    },
+    "Success": {
+      "title": "Success",
+      "description": "A record of a major success.",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string", "description": "The description of the success." },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      },
+      "required": ["text", "createdAt", "userId"]
+    },
+    "UserStat": {
+      "title": "UserStat",
+      "description": "User statistics and state.",
+      "type": "object",
+      "properties": {
+        "rejectionCount": { "type": "number" },
+        "isShattered": { "type": "boolean" },
+        "userId": { "type": "string" }
+      },
+      "required": ["rejectionCount", "isShattered", "userId"]
+    }
+  },
+  "firestore": {
+    "rejections/{rejectionId}": {
+      "schema": { "$ref": "#/entities/Rejection" },
+      "description": "Collection of rejections."
+    },
+    "successes/{successId}": {
+      "schema": { "$ref": "#/entities/Success" },
+      "description": "Collection of successes."
+    },
+    "userStats/{userId}": {
+      "schema": { "$ref": "#/entities/UserStat" },
+      "description": "User statistics."
+    }
+  }
+}
