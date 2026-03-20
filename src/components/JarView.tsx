@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
+import { Star } from 'lucide-react';
 import { Rejection } from '../App';
 
 interface JarViewProps {
@@ -11,14 +12,16 @@ export default function JarView({ rejections, count }: JarViewProps) {
   // Generate random positions for stars inside the jar
   const stars = useMemo(() => {
     return rejections.map((rej, i) => {
-      // Jar dimensions roughly: width 200px, height 300px
+      // Jar dimensions roughly: width 256px, height 384px
       // We want stars to be inside the jar bounds
-      const x = Math.random() * 160 - 80; // -80 to 80
-      const y = Math.random() * 240 - 120; // -120 to 120
+      const x = Math.random() * 180 - 90; // -90 to 90
+      const y = Math.random() * 280 - 140; // -140 to 140
       const delay = Math.random() * 2;
       const duration = 3 + Math.random() * 4;
+      const xOffset = Math.random() * 20 - 10;
+      const yOffset = Math.random() * 20 - 10;
       
-      return { id: rej.id, x, y, delay, duration };
+      return { id: rej.id, x, y, delay, duration, xOffset, yOffset };
     });
   }, [rejections]);
 
@@ -63,9 +66,10 @@ export default function JarView({ rejections, count }: JarViewProps) {
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ 
                   opacity: [0.6, 1, 0.6],
-                  scale: [0.8, 1.2, 0.8],
-                  x: [star.x, star.x + (Math.random() * 20 - 10), star.x],
-                  y: [star.y, star.y + (Math.random() * 20 - 10), star.y],
+                  scale: [0.8, 1.1, 0.8],
+                  x: [star.x, star.x + star.xOffset, star.x],
+                  y: [star.y, star.y + star.yOffset, star.y],
+                  rotate: [0, 10, -10, 0]
                 }}
                 transition={{
                   duration: star.duration,
@@ -74,8 +78,10 @@ export default function JarView({ rejections, count }: JarViewProps) {
                   delay: star.delay,
                   ease: "easeInOut"
                 }}
-                className="absolute w-2 h-2 bg-yellow-300 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.8)]"
-              />
+                className="absolute text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.8)]"
+              >
+                <Star size={20} fill="currentColor" strokeWidth={1.5} />
+              </motion.div>
             ))}
           </div>
         </div>
